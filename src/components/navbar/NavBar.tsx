@@ -1,41 +1,36 @@
 import React from "react";
-
+import Link from "next/link";
+import "./../../app/globals.css";
 const NavBar = () => {
   return (
     <nav className="bg-white text-gray-800 flex flex-col sm:flex-row justify-between items-center px-4 py-2">
-      <a href="/" className="text-xl font-bold text-gray-800 mb-2 sm:mb-0">
+      <Link href="/" className="text-xl font-bold text-gray-800 mb-2 sm:mb-0">
         INMOBILIARIAS URIBE
-      </a>
+      </Link>
+
       <ul className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Catálogo
-          </a>
+          <Link href="/CataloguePage" className="text-gray-800">
+            Catalogo
+          </Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Mis casas
-          </a>
+          <Link href="/#">Mis Casas</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Vendedores Autorizados
-          </a>
+          <Link href="/#">Vendedores Autorizados</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Publicar propiedad
-          </a>
+          <Link href="/UploadEstatePage">Publicar Propiedad</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Mapa
-          </a>
+          <Link href="/#">Mapa</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <a href="/#" className="text-gray-800">
-            Sign Up / Log In
-          </a>
+          <Link href="/LoginPage">Log In</Link>
+        </li>
+        <li className="hover:bg-gray-200 py-2 px-3 rounded">
+          <Link href="/SignUpPage">Sign Up</Link>
         </li>
       </ul>
     </nav>

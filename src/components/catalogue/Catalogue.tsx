@@ -11,7 +11,7 @@ const Catalogue = () => {
   return (
     <div>
       <BannerHero />
-      <div className="flex h-screen">
+      <div className="flex h-screen ">
         <FilterSidebar onFilterChange={handleFilterChange} />
         <main className="flex-1"></main>
       </div>

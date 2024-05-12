@@ -28,8 +28,8 @@ const FilterSidebar = ({ onFilterChange }: Props) => {
   };
 
   return (
-    <aside className="w-64" aria-label="Sidebar">
-      <div className="overflow-y-auto py-4 px-3 bg-gray-50 rounded bg-slate-300">
+    <aside className="max-w md:w-64" aria-label="Sidebar">
+      <div className="overflow-y-auto py-4 px-3  rounded bg-slate-300">
         <h1 className="text-4xl text-gray-900 dark:text-gray-950 font-semibold">
           Filtros
         </h1>

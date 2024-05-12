@@ -11,7 +11,7 @@ const Search = () => {
       <div className="relative w-full max-w-md mb-16 sm:mb-24">
         <Input
           type="text"
-          placeholder="Colonia o ciudad"
+          placeholder="ciudad"
           className="rounded-full px-4 py-3 pr-10 w-full"
           required
         />
