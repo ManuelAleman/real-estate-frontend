@@ -13,11 +13,15 @@ interface Props {
   type: string;
 }
 
-const BuyCatalogue = ({ estateData, type }: Props) => {
+const CatalogueEstates = ({ estateData, type }: Props) => {
   return (
-    <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-48 mt-12">
+    <div>
       <h1 className="text-3xl font-bold mb-8 text-center">{type}</h1>
-      <div className="flex flex-row overflow-x-auto justify-start sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 flex-wrap ">
+      <div className="flex flex-row overflow-x-auto justify-center sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 flex-wrap ">
+        <EstateCard {...estateData} />
+        <EstateCard {...estateData} />
+        <EstateCard {...estateData} />
+        <EstateCard {...estateData} />
         <EstateCard {...estateData} />
         <EstateCard {...estateData} />
         <EstateCard {...estateData} />
@@ -31,4 +35,4 @@ const BuyCatalogue = ({ estateData, type }: Props) => {
   );
 };
 
-export default BuyCatalogue;
+export default CatalogueEstates;
