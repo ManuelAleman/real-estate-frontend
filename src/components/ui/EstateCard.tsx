@@ -2,12 +2,17 @@ import React from "react";
 import Image from "next/image";
 
 interface Props {
-  imagen: string;
   name: string;
+  presentationImg: string;
+  description: string;
   price: number;
-  rooms: number;
-  sqtr: number;
-  location: string;
+  type: string;
+  categoty: string;
+  seller: string;
+  city: string;
+  address: string;
+  characteristics: string[];
+  images: string[];
 }
 
 const EstateCard = (props: Props) => {
@@ -16,17 +21,20 @@ const EstateCard = (props: Props) => {
       <div className="bg-white shadow-lg rounded-lg overflow-hidden  ">
         <Image
           className="w-full h-56 object-cover object-center"
-          src={props.imagen}
+          src={props.presentationImg}
           width={500}
           height={300}
           alt="estate"
         />
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800">{props.name}</h1>{" "}
-          <p className="text-sm text-gray-600">{props.location}</p>
+          <p className="text-sm text-gray-600">{props.address}</p>
           <div className="flex justify-between items-center mt-4">
-            <p className="text-sm text-gray-600 mr-8">{props.rooms} bed</p>
-            <p className="text-sm text-gray-600 mr-8">{props.sqtr} sqtr</p>
+            {(props.characteristics ?? []).map((characteristic, index) => (
+              <p key={index} className="text-xs text-gray-500">
+                {characteristic}
+              </p>
+            ))}
           </div>
           <div className="flex justify-between items-center mt-4">
             <h1 className="text-lg font-bold text-gray-800">${props.price}</h1>{" "}
