@@ -11,6 +11,7 @@ interface Estate {
   price: number;
   type: string;
   categoty: string;
+  user: string;
   seller: string;
   city: string;
   address: string;
@@ -22,6 +23,9 @@ const Catalogue = () => {
   const handleFilterChange = (key: string, value: string) => {
     console.log(key, value);
   };
+
+  const [priceFilter, setPriceFilter] = useState(0);
+  const [cityFilter, setCityFilter] = useState("");
   const [typeEstate, setTypeEstate] = useState("venta");
 
   const [estateData, setEstateData] = useState<Estate[]>([]);

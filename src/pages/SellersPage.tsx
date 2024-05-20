@@ -35,16 +35,53 @@ const SellersPage = () => {
     <div>
       <NavBar />
       <BannerHero />
-      {sellers.map((seller: Seller, index: number) => (
-        <SellerCard
-          name={seller.user.name}
-          email={seller.user.email}
-          phone={seller.user.contactNumber}
-          photo={seller.user.profilePicture}
-          rating={seller.rating}
-          key={index}
-        />
-      ))}
+      <div>
+        <h1 className="text-3xl font-semibold text-center my-8">
+          Nuestros Vendedores
+        </h1>
+      </div>
+      <div className="container items-center mx-auto grid grid-cols-1 md:grid-cols-2 md:gap-4">
+        {sellers.map((seller: Seller, index: number) => (
+          <SellerCard
+            name={seller.user.name}
+            email={seller.user.email}
+            phone={seller.user.contactNumber}
+            photo={seller.user.profilePicture}
+            rating={seller.rating}
+            key={index}
+          />
+        ))}
+        {sellers.map((seller: Seller, index: number) => (
+          <SellerCard
+            name={seller.user.name}
+            email={seller.user.email}
+            phone={seller.user.contactNumber}
+            photo={seller.user.profilePicture}
+            rating={seller.rating}
+            key={index}
+          />
+        ))}
+        {sellers.map((seller: Seller, index: number) => (
+          <SellerCard
+            name={seller.user.name}
+            email={seller.user.email}
+            phone={seller.user.contactNumber}
+            photo={seller.user.profilePicture}
+            rating={seller.rating}
+            key={index}
+          />
+        ))}
+        {sellers.map((seller: Seller, index: number) => (
+          <SellerCard
+            name={seller.user.name}
+            email={seller.user.email}
+            phone={seller.user.contactNumber}
+            photo={seller.user.profilePicture}
+            rating={seller.rating}
+            key={index}
+          />
+        ))}
+      </div>
       <Footer />
     </div>
   );

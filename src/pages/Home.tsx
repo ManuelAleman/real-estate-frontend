@@ -12,6 +12,7 @@ interface Estate {
   price: number;
   type: string;
   categoty: string;
+  user: string;
   seller: string;
   city: string;
   address: string;
