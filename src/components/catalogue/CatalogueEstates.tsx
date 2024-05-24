@@ -8,7 +8,8 @@ interface Props {
     description: string;
     price: number;
     type: string;
-    categoty: string;
+    category: string;
+    user: string;
     seller: string;
     city: string;
     address: string;
@@ -22,13 +23,12 @@ const CatalogueEstates = ({ estateData, type }: Props) => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8 text-center">{type}</h1>
-      <div className="flex flex-row overflow-x-auto justify-center sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 flex-wrap ">
+      <div className="grid grid-cols-1 md:grid-cols-4 overflow-x-auto justify-center sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 gap-12 ">
         {estateData.length === 0 && (
           <div className="flex justify-center items-center h-96">
             <h1 className="text-2xl text-gray-800">No hay propiedades</h1>
           </div>
         )}
-
         {estateData.map((estate, index) => (
           <EstateCard
             key={index}
@@ -37,7 +37,7 @@ const CatalogueEstates = ({ estateData, type }: Props) => {
             description={estate.description}
             price={estate.price}
             type={estate.type}
-            categoty={estate.categoty}
+            categoty={estate.category}
             seller={estate.seller}
             city={estate.city}
             address={estate.address}
@@ -45,11 +45,6 @@ const CatalogueEstates = ({ estateData, type }: Props) => {
             images={estate.images}
           />
         ))}
-      </div>
-      <div className="flex justify-center">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-8">
-          Ver más
-        </button>
       </div>
     </div>
   );

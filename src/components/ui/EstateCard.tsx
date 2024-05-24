@@ -17,7 +17,7 @@ interface Props {
 
 const EstateCard = (props: Props) => {
   return (
-    <div className="w-80 mx-6 pb-8">
+    <div className=" pb-8">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden  ">
         <Image
           className="w-full h-56 object-cover object-center"
@@ -29,6 +29,8 @@ const EstateCard = (props: Props) => {
         <div className="p-4">
           <h1 className="text-xl font-bold text-gray-800">{props.name}</h1>{" "}
           <p className="text-sm text-gray-600">{props.address}</p>
+          <p className="text-gray-600 text-2xl">{props.city}</p>
+          <p className="text-sm text-gray-600">{props.type}</p>
           <div className="flex justify-between items-center mt-4">
             {(props.characteristics ?? []).map((characteristic, index) => (
               <p key={index} className="text-xs text-gray-500">

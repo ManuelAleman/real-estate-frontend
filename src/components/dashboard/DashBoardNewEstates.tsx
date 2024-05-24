@@ -22,7 +22,10 @@ const DashBoardNewEstates = ({ estateData, type }: Props) => {
   return (
     <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-48 mt-12">
       <h1 className="text-3xl font-bold mb-8 text-center">{type}</h1>
-      <div className="flex flex-row overflow-x-auto justify-start sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 flex-wrap ">
+      <div className="grid grid-cols-1 md:grid-cols-3 overflow-x-auto justify-start sm:justify-center mx-2 sm:mx-4 md:mx-8 lg:mx-16 pb-4 gap-24">
+        {estateData.length === 0 && (
+          <p className="text-center w-full">No hay propiedades disponibles</p>
+        )}
         {estateData.map((estate, index) => (
           <EstateCard
             key={index}

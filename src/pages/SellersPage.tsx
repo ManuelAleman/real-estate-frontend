@@ -13,7 +13,6 @@ interface User {
 
 interface Seller {
   user: User;
-  location: string;
   city: string;
   rating: number;
   verified: boolean;

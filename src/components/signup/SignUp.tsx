@@ -52,7 +52,8 @@ const SignUp = () => {
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
-          className="rounded-full border border-black px-4 py-2 mb-4 text-black"
+          pattern="[0-9a-zA-Z]{8,}"
+          className="rounded-full border border-black px-4 py-2 mb-4 text-black required password>8"
         />
         <input
           type="password"
@@ -60,6 +61,9 @@ const SignUp = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           className="rounded-full border border-black px-4 py-2 mb-4 text-black"
         />
+        <span className="mt-1 hidden text-sm text-red-400">
+          Password must be at least 8 characters.{" "}
+        </span>
         <input
           type="text"
           placeholder="Telefono"

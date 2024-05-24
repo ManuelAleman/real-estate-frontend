@@ -33,7 +33,7 @@ const LogIn = () => {
           type="text"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
-          className="rounded-full border border-black px-4 py-2 mb-4 text-black "
+          className="rounded-full border border-black px-4 py-2 mb-4 text-black requ"
         />
         <input
           type="password"

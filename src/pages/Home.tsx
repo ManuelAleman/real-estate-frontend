@@ -62,7 +62,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/estates/getEstates")
+    fetch("http://192.168.1.14:8080/estates/getEstates")
       .then((response) => response.json())
       .then((data) => {
         data = data.estates;
@@ -88,8 +88,8 @@ const Home = () => {
     <div>
       <NavBar />
       <Search />
-      <DashBoardNewEstates estateData={buyEstates.slice(0, 3)} type="Comprar" />
-      <DashBoardNewEstates estateData={sellEstates.slice(0, 3)} type="Vender" />
+      <DashBoardNewEstates estateData={buyEstates.slice(0, 3)} type="Venta" />
+      <DashBoardNewEstates estateData={sellEstates.slice(0, 3)} type="Renta" />
       {isLoggedIn && myEstates.length > 0 ? (
         <DashBoardNewEstates
           estateData={myEstates.slice(0, 3)}

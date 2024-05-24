@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
+import ProfileDropDown from "./../dropdown/ProfileDropDown";
 import "./../../app/globals.css";
 const NavBar = () => {
   const [isLogged, setIsLogged] = React.useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setIsLogged(true);
@@ -24,7 +25,7 @@ const NavBar = () => {
           </Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <Link href="/#">Mis Casas</Link>
+          <Link href="/MyHousesPage">Mis Casas</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
           <Link href="/SellersPage">Vendedores Autorizados</Link>
@@ -37,9 +38,7 @@ const NavBar = () => {
         </li>
 
         {isLogged ? (
-          <li className="hover:bg-gray-200 py-2 px-3 rounded">
-            <Link href="/ProfilePage">Perfil</Link>
-          </li>
+          <ProfileDropDown />
         ) : (
           <>
             <li className="hover:bg-gray-200 py-2 px-3 rounded">
