@@ -34,7 +34,7 @@ const DashBoardNewEstates = ({ estateData, type }: Props) => {
             description={estate.description}
             price={estate.price}
             type={estate.type}
-            categoty={estate.categoty}
+            category={estate.categoty}
             seller={estate.seller}
             city={estate.city}
             address={estate.address}

@@ -120,7 +120,7 @@ const ProfilePage = () => {
                       description={house.description}
                       price={house.price}
                       type={house.type}
-                      categoty={house.category}
+                      category={house.category}
                       seller={house.seller}
                       city={house.city}
                       address={house.address}

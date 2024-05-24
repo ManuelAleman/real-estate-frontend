@@ -7,7 +7,7 @@ interface Props {
   description: string;
   price: number;
   type: string;
-  categoty: string;
+  category: string;
   seller: string;
   city: string;
   address: string;

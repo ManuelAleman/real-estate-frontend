@@ -37,7 +37,7 @@ const CatalogueEstates = ({ estateData, type }: Props) => {
             description={estate.description}
             price={estate.price}
             type={estate.type}
-            categoty={estate.category}
+            category={estate.category}
             seller={estate.seller}
             city={estate.city}
             address={estate.address}

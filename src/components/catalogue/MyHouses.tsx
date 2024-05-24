@@ -26,35 +26,48 @@ const MyHouses = ({ id }: MyHouseInfo) => {
   const [myHouses, setMyHouses] = useState<Props["estateData"]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/estates/getEstates")
+    const token = localStorage.getItem("token");
+
+    fetch(`http://localhost:8080/estates/getEstatesFromUser/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        data = data.estates;
-        setMyHouses(data);
+        if (data.success) {
+          console.log("Estates:", data.estates);
+          setMyHouses(data.estates);
+        } else {
+          console.error("Error fetching estates:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-  }, []);
+  }, [id]);
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ">
-        {myHouses
-          .filter((house) => house.user === id || house.seller === id)
-          .map((house, index) => (
-            <EstateCard
-              key={index}
-              name={house.name}
-              presentationImg={house.presentationImg}
-              description={house.description}
-              price={house.price}
-              type={house.type}
-              categoty={house.category}
-              seller={house.seller}
-              city={house.city}
-              address={house.address}
-              characteristics={house.characteristics}
-              images={house.images}
-            />
-          ))}
+        {myHouses.map((house, index) => (
+          <EstateCard
+            key={index}
+            name={house.name}
+            presentationImg={house.presentationImg}
+            description={house.description}
+            price={house.price}
+            type={house.type}
+            category={house.category}
+            seller={house.seller}
+            city={house.city}
+            address={house.address}
+            characteristics={house.characteristics}
+            images={house.images}
+          />
+        ))}
       </div>
     </div>
   );

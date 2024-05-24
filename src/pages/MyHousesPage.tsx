@@ -3,16 +3,14 @@ import NavBar from "@/components/navbar/NavBar";
 import Footer from "@/components/footer/Footer";
 import BannerHero from "@/components/ui/BannerHero";
 import MyHouses from "@/components/catalogue/MyHouses";
+
 interface PropID {
   id: string;
 }
 
 const MyHousesPage = () => {
   const [isLogged, setIsLogged] = React.useState(false);
-
-  const [profile, setProfile] = useState<PropID>({
-    id: "",
-  });
+  const [profile, setProfile] = useState<PropID>({ id: "" });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,7 +27,6 @@ const MyHousesPage = () => {
           const { _id: id } = data.user;
           setProfile({ id });
           setIsLogged(true);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -46,12 +43,13 @@ const MyHousesPage = () => {
       <BannerHero />
       <div className="container mx-auto my-12">
         <h1 className="text-3xl font-bold text-center mb-8">Mis Propiedades</h1>
-        {!isLogged && (
+        {!isLogged ? (
           <div className="text-center my-40 text-3xl">
             <p>Debes iniciar sesión para ver tus propiedades</p>
           </div>
+        ) : (
+          <MyHouses id={profile.id} />
         )}
-        <MyHouses id={profile.id} />
       </div>
       <Footer />
     </div>
