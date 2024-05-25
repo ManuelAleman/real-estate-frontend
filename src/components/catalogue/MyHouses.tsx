@@ -18,6 +18,7 @@ interface Props {
     seller: string;
     city: string;
     address: string;
+    status: string;
     characteristics: string[];
     images: string[];
   }[];
@@ -52,22 +53,26 @@ const MyHouses = ({ id }: MyHouseInfo) => {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 ">
-        {myHouses.map((house, index) => (
-          <EstateCard
-            key={index}
-            name={house.name}
-            presentationImg={house.presentationImg}
-            description={house.description}
-            price={house.price}
-            type={house.type}
-            category={house.category}
-            seller={house.seller}
-            city={house.city}
-            address={house.address}
-            characteristics={house.characteristics}
-            images={house.images}
-          />
-        ))}
+        {myHouses
+          .filter((house) => house.status === "approved")
+          .map((house, index) => (
+            <EstateCard
+              key={index}
+              name={house.name}
+              presentationImg={house.presentationImg}
+              description={house.description}
+              price={house.price}
+              type={house.type}
+              category={house.category}
+              user={house.user}
+              seller={house.seller}
+              city={house.city}
+              address={house.address}
+              status={house.status}
+              characteristics={house.characteristics}
+              images={house.images}
+            />
+          ))}
       </div>
     </div>
   );

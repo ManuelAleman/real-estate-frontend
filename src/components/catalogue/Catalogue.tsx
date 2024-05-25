@@ -10,6 +10,7 @@ interface Estate {
   type: string;
   category: string;
   user: string;
+  status: string;
   seller: string;
   city: string;
   address: string;

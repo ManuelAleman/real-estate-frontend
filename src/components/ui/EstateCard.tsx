@@ -8,8 +8,10 @@ interface Props {
   price: number;
   type: string;
   category: string;
+  user: string;
   seller: string;
   city: string;
+  status: string;
   address: string;
   characteristics: string[];
   images: string[];

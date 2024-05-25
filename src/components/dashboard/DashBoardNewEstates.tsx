@@ -9,7 +9,9 @@ interface Props {
     price: number;
     type: string;
     categoty: string;
+    user: string;
     seller: string;
+    status: string;
     city: string;
     address: string;
     characteristics: string[];
@@ -26,22 +28,26 @@ const DashBoardNewEstates = ({ estateData, type }: Props) => {
         {estateData.length === 0 && (
           <p className="text-center w-full">No hay propiedades disponibles</p>
         )}
-        {estateData.map((estate, index) => (
-          <EstateCard
-            key={index}
-            presentationImg={estate.presentationImg}
-            name={estate.name}
-            description={estate.description}
-            price={estate.price}
-            type={estate.type}
-            category={estate.categoty}
-            seller={estate.seller}
-            city={estate.city}
-            address={estate.address}
-            characteristics={estate.characteristics}
-            images={estate.images}
-          />
-        ))}
+        {estateData
+          .filter((estate) => estate.status === "approved")
+          .map((estate, index) => (
+            <EstateCard
+              key={index}
+              presentationImg={estate.presentationImg}
+              name={estate.name}
+              description={estate.description}
+              price={estate.price}
+              type={estate.type}
+              status={estate.status}
+              user={estate.user}
+              category={estate.categoty}
+              seller={estate.seller}
+              city={estate.city}
+              address={estate.address}
+              characteristics={estate.characteristics}
+              images={estate.images}
+            />
+          ))}
       </div>
       <div className="flex justify-center">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-8">

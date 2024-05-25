@@ -9,6 +9,7 @@ interface Props {
     price: number;
     type: string;
     category: string;
+    status: string;
     user: string;
     seller: string;
     city: string;
@@ -29,22 +30,26 @@ const CatalogueEstates = ({ estateData, type }: Props) => {
             <h1 className="text-2xl text-gray-800">No hay propiedades</h1>
           </div>
         )}
-        {estateData.map((estate, index) => (
-          <EstateCard
-            key={index}
-            name={estate.name}
-            presentationImg={estate.presentationImg}
-            description={estate.description}
-            price={estate.price}
-            type={estate.type}
-            category={estate.category}
-            seller={estate.seller}
-            city={estate.city}
-            address={estate.address}
-            characteristics={estate.characteristics}
-            images={estate.images}
-          />
-        ))}
+        {estateData
+          .filter((estate) => estate.status === "approved")
+          .map((estate, index) => (
+            <EstateCard
+              key={index}
+              name={estate.name}
+              presentationImg={estate.presentationImg}
+              description={estate.description}
+              price={estate.price}
+              type={estate.type}
+              category={estate.category}
+              status={estate.status}
+              user={estate.user}
+              seller={estate.seller}
+              city={estate.city}
+              address={estate.address}
+              characteristics={estate.characteristics}
+              images={estate.images}
+            />
+          ))}
       </div>
     </div>
   );

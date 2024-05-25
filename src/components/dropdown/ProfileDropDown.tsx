@@ -1,8 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Link from "next/link";
 
+interface profile {
+  id: string;
+  role: string;
+}
 const ProfileDropDown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [profile, setProfile] = useState<profile>({ id: "", role: "" });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/users/getUser", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.user) {
+            const { _id: id, role } = data.user;
+            console.log("User data:", data.user);
+            setProfile({ id, role });
+          } else {
+            console.error("User data is null or undefined");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -58,12 +89,37 @@ const ProfileDropDown = () => {
           </li>
           <li>
             <Link
-              href="/SettingsPage"
+              href="/MyHousesPage"
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
             >
-              Configuracion
+              Mis Casas
             </Link>
           </li>
+          {profile.role === "admin" && (
+            <li>
+              <Link
+                href="/ApproveEstates"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                role={profile.role}
+              >
+                Aprovar Propiedades
+              </Link>
+
+              <Link
+                href="/AsignarVendedor"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Asignar Vendedor
+              </Link>
+
+              <Link
+                href="/RegistrarVendedor"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Registrar vendedor
+              </Link>
+            </li>
+          )}
           <li>
             <button
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"

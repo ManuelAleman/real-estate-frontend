@@ -27,6 +27,7 @@ interface Props {
     user: string;
     seller: string;
     city: string;
+    status: string;
     address: string;
     characteristics: string[];
     images: string[];
@@ -73,13 +74,28 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/estates/getEstates")
+    const token = localStorage.getItem("token");
+
+    fetch(`http://localhost:8080/estates/getEstatesFromUser/${profile.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        data = data.estates;
-        setMyHouses(data);
+        if (data.success) {
+          console.log("Estates:", data.estates);
+          setMyHouses(data.estates);
+        } else {
+          console.error("Error fetching estates:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-  }, []);
+  }, [profile.id]);
 
   return (
     <div>
@@ -91,7 +107,7 @@ const ProfilePage = () => {
             <div className="md:items-start pt-20 my-4 mx-auto text-center">
               <p className="text-gray-500 mb-8 text-2xl ">{profile.role}</p>
               <Image
-                src="https://i.pinimg.com/236x/2f/97/f0/2f97f05b32547f54ef1bdf99cd207c90.jpg"
+                src={profile.img}
                 alt="profile"
                 width={150}
                 height={150}
@@ -107,10 +123,7 @@ const ProfilePage = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-20">
                 {myHouses
-                  .filter(
-                    (house) =>
-                      house.user === profile.id || house.seller === profile.id
-                  )
+                  .filter((house) => house.status === "approved")
                   .slice(0, visibleHouses)
                   .map((house, index) => (
                     <EstateCard
@@ -122,6 +135,8 @@ const ProfilePage = () => {
                       type={house.type}
                       category={house.category}
                       seller={house.seller}
+                      user={house.user}
+                      status={house.status}
                       city={house.city}
                       address={house.address}
                       characteristics={house.characteristics}

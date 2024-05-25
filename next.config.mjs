@@ -5,6 +5,7 @@ const nextConfig = {
       { hostname: "e7.pngegg.com" },
       { hostname: "i.blogs.es" },
       { hostname: "cdn.pixabay.com" },
+      { hostname: "w7.pngwing.com" },
       { hostname: "i.pinimg.com" },
     ],
   },
