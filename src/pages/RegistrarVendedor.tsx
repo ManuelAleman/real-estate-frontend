@@ -115,7 +115,6 @@ const RegistrarVendedor: React.FC = () => {
       <div className="flex flex-col h-screen">
         <NavBar />
         <BannerHero />
-
         <h1 className="text-center text-4xl font-bold mt-12 mb-20">
           No hay usuarios para crear vendedor
         </h1>
