@@ -93,7 +93,7 @@ const Home = () => {
       {isLoggedIn && myEstates.length > 0 ? (
         <DashBoardNewEstates
           estateData={myEstates.slice(0, 3)}
-          type="Mis Propiedades"
+          type="Mis_propiedades"
         />
       ) : (
         <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-24 xl:mx-48 mt-12">

@@ -33,6 +33,11 @@ const Catalogue = () => {
       setCityFilter(storedCity);
     }
 
+    const typeEstate = localStorage.getItem("type");
+    if (typeEstate) {
+      setTypeEstate(typeEstate);
+    }
+
     fetch("http://localhost:8080/estates/getEstates")
       .then((response) => response.json())
       .then((data) => {

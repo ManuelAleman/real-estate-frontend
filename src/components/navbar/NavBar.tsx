@@ -12,6 +12,12 @@ const NavBar = () => {
     }
   }, []);
 
+  const handleLocalStorage = () => {
+    localStorage.setItem("city", "");
+    localStorage.setItem("price", "0");
+    localStorage.setItem("type", "");
+  };
+
   return (
     <nav className="bg-white text-gray-800 flex flex-col sm:flex-row justify-between items-center px-4 py-2">
       <Link href="/" className="text-xl font-bold text-gray-800 mb-2 sm:mb-0">
@@ -20,7 +26,11 @@ const NavBar = () => {
 
       <ul className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <Link href="/CataloguePage" className="text-gray-800">
+          <Link
+            href="/CataloguePage"
+            className="text-gray-800"
+            onClick={handleLocalStorage}
+          >
             Catalogo
           </Link>
         </li>

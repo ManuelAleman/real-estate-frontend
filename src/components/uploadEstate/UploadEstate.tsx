@@ -63,16 +63,31 @@ const UploadEstate = () => {
     }
   }, [router]);
 
-  const handleDeleteRoom = (id: number) => {
+  const handleDeleteRoom = (id: number, roomType: string) => {
+    console.log("id", id);
+    console.log("roomType", roomType);
+
+    console.log("rooms", rooms);
+
     const updatedRooms = rooms.filter((room) => room.id !== id);
     setRooms(updatedRooms);
+
+    console.log("updatedRooms", updatedRooms);
+
+    const type = `image1-${roomType}-${id}`;
+    const type2 = `image2-${roomType}-${id}`;
+
+    const updatedImages = roomImages.filter(
+      (image) => image.roomId !== type && image.roomId !== type2
+    );
+    setRoomImages(updatedImages);
   };
 
   const handleAddRoom = () => {
     if (!roomType) return;
 
     const newRoom = {
-      id: rooms.length + 1,
+      id: rooms.length > 0 ? Math.max(...rooms.map((room) => room.id)) + 1 : 1,
       type: roomType,
     };
     setRooms((prevRooms) => [...prevRooms, newRoom]);
@@ -147,9 +162,10 @@ const UploadEstate = () => {
     const imagesWithoutPresentationImg = roomImages.slice(1);
 
     console.log(
-      "imagesWithoutPresentationImg",
+      "IMAGES INFORMACION",
       imagesWithoutPresentationImg.map((image) => image.file)
     );
+
     console.log("roomImages", roomImages[0].file);
 
     const addres = document.getElementById("address") as HTMLInputElement;
@@ -265,7 +281,7 @@ const UploadEstate = () => {
           key={room.id}
           roomType={room.type}
           roomId={room.id.toString()}
-          handleDeleteRoom={() => handleDeleteRoom(room.id)}
+          handleDeleteRoom={() => handleDeleteRoom(room.id, room.type)}
           handleUploadImage={handleUploadImage}
         />
       ))}

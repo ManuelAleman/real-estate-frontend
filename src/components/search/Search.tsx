@@ -15,7 +15,6 @@ const Search = () => {
       localStorage.setItem("type", "");
       localStorage.setItem("logPrice", "7.69897");
     }
-
     window.location.href = "/CataloguePage";
   };
 
