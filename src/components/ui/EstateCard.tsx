@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
-
+import Link from "next/link";
 interface Props {
+  id: string;
   name: string;
   presentationImg: string;
   description: string;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const EstateCard = (props: Props) => {
+  console.log(props);
   return (
     <div className=" pb-8">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden  ">
@@ -42,9 +44,15 @@ const EstateCard = (props: Props) => {
           </div>
           <div className="flex justify-between items-center mt-4">
             <h1 className="text-lg font-bold text-gray-800">${props.price}</h1>{" "}
-            <button className="px-3 py-1 bg-gray-800 text-white text-xs font-bold uppercase rounded">
+            <Link
+              className="px-3 py-1 bg-gray-800 text-white text-xs font-bold uppercase rounded"
+              href={{
+                pathname: "/EstateInfoPage",
+                query: { id: props.id },
+              }}
+            >
               Ver Propiedad
-            </button>
+            </Link>
           </div>
         </div>
       </div>

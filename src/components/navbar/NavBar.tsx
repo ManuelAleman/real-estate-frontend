@@ -34,7 +34,7 @@ const NavBar = () => {
           <Link href="/UploadEstatePage">Publicar Propiedad</Link>
         </li>
         <li className="hover:bg-gray-200 py-2 px-3 rounded">
-          <Link href="/#">Mapa</Link>
+          <Link href="/MapPage">Mapa</Link>
         </li>
 
         {isLogged ? (

@@ -3,6 +3,7 @@ import EstateCard from "@/components/ui/EstateCard";
 
 interface Props {
   estateData: {
+    _id: string;
     name: string;
     presentationImg: string;
     description: string;
@@ -33,6 +34,7 @@ const DashBoardNewEstates = ({ estateData, type }: Props) => {
           .map((estate, index) => (
             <EstateCard
               key={index}
+              id={estate._id}
               presentationImg={estate.presentationImg}
               name={estate.name}
               description={estate.description}

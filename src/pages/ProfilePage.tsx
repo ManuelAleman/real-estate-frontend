@@ -128,6 +128,7 @@ const ProfilePage = () => {
                   .map((house, index) => (
                     <EstateCard
                       key={index}
+                      id={house._id}
                       name={house.name}
                       presentationImg={house.presentationImg}
                       description={house.description}

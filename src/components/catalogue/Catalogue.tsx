@@ -3,6 +3,7 @@ import FilterModal from "../ui/FilterModal";
 import CatalogueEstates from "./CatalogueEstates";
 
 interface Estate {
+  _id: string;
   name: string;
   presentationImg: string;
   description: string;

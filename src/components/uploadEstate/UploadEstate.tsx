@@ -117,6 +117,11 @@ const UploadEstate = () => {
     const priceField = document.getElementById("price") as HTMLInputElement;
     const cityField = document.getElementById("city") as HTMLInputElement;
     const addressField = document.getElementById("address") as HTMLInputElement;
+    const colonyField = document.getElementById("colony") as HTMLInputElement;
+    const zipCode = document.getElementById("zipCode") as HTMLInputElement;
+    const numberField = document.getElementById(
+      "nExterior"
+    ) as HTMLInputElement;
 
     const allFieldsFilled =
       typeField.value !== "" &&
@@ -125,7 +130,10 @@ const UploadEstate = () => {
       descriptionField.value !== "" &&
       priceField.value !== "" &&
       cityField.value !== "" &&
-      addressField.value !== "";
+      addressField.value !== "" &&
+      colonyField.value !== "" &&
+      zipCode.value !== "" &&
+      numberField.value !== "";
 
     setFormFieldsFilled(allFieldsFilled);
   };
@@ -144,6 +152,14 @@ const UploadEstate = () => {
     );
     console.log("roomImages", roomImages[0].file);
 
+    const addres = document.getElementById("address") as HTMLInputElement;
+    const colony = document.getElementById("colony") as HTMLInputElement;
+    const zipCode = document.getElementById("zipCode") as HTMLInputElement;
+    const number = document.getElementById("nExterior") as HTMLInputElement;
+    const city = document.getElementById("city") as HTMLInputElement;
+
+    const totalAddress = `${addres.value} ${number.value} ${colony.value} ${zipCode.value} ${city.value}`;
+
     const estate: Estate = {
       presentationImg: roomImages[0].file,
       name: (document.getElementById("name") as HTMLInputElement).value,
@@ -158,7 +174,7 @@ const UploadEstate = () => {
         .value,
       user: userId,
       city: (document.getElementById("city") as HTMLInputElement).value,
-      address: (document.getElementById("address") as HTMLInputElement).value,
+      address: totalAddress,
       wantSeller: (document.getElementById("wantSeller") as HTMLSelectElement)
         .value,
       characteristics: rooms.map((room) => room.type),
@@ -177,11 +193,15 @@ const UploadEstate = () => {
     formData.append("city", estate.city);
     formData.append("address", estate.address);
     formData.append("wantSeller", estate.wantSeller);
-    formData.append("characteristics", JSON.stringify(estate.characteristics));
+    estate.characteristics.forEach((characteristic) => {
+      formData.append("characteristics", characteristic);
+    });
     formData.append("status", estate.status);
     estate.images.forEach((image) => {
       formData.append("images", image);
     });
+
+    console.log("formData", formData);
 
     fetch("http://localhost:8080/estates/createEstate", {
       method: "POST",

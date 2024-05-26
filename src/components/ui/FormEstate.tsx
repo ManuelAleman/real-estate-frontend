@@ -159,7 +159,7 @@ const FormEstate = ({
           htmlFor="address"
           className="block text-sm font-medium text-gray-700 mt-4"
         >
-          Dirección
+          Calle
         </label>
         <input
           type="text"
@@ -167,6 +167,54 @@ const FormEstate = ({
           name="address"
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Dirección completa"
+          required
+          onChange={checkFormFields}
+        />
+
+        <label
+          htmlFor="colony"
+          className="block text-sm font-medium text-gray-700 mt-4"
+        >
+          Colonia
+        </label>
+        <input
+          type="text"
+          id="colony"
+          name="colony"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Colonia"
+          required
+          onChange={checkFormFields}
+        />
+
+        <label
+          htmlFor="zipCode"
+          className="block text-sm font-medium text-gray-700 mt-4"
+        >
+          Código postal
+        </label>
+        <input
+          type="number"
+          id="zipCode"
+          name="zipCode"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Código postal"
+          required
+          onChange={checkFormFields}
+        />
+
+        <label
+          htmlFor="nExterior"
+          className="block text-sm font-medium text-gray-700 mt-4"
+        >
+          Número exterior
+        </label>
+        <input
+          type="number"
+          id="nExterior"
+          name="nExterior"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Número exterior"
           required
           onChange={checkFormFields}
         />

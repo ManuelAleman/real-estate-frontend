@@ -102,7 +102,7 @@ const ProfileDropDown = () => {
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                 role={profile.role}
               >
-                Aprovar Propiedades
+                Aprobar Propiedades
               </Link>
 
               <Link
