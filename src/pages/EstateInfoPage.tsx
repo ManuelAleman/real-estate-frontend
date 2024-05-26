@@ -5,6 +5,8 @@ import Footer from "@/components/footer/Footer";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import HouseRoomPresentation from "@/components/ui/HouseRoomPresentation";
+import Modal from "@/components/ui/MeetingModal";
+
 interface idEstate {
   id: string;
 }
@@ -32,10 +34,16 @@ interface User {
 }
 
 interface Seller {
+  id: string;
   user: User;
   city: string;
   rating: number;
   verified: boolean;
+}
+
+interface ProfileData {
+  id: string;
+  name: string;
 }
 
 const EstateInfoPage = () => {
@@ -44,6 +52,32 @@ const EstateInfoPage = () => {
   const { id } = router.query;
   const [category, setCategory] = useState<string>("");
   const [seller, setSeller] = useState<Seller>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState<string>("");
+
+  const [profile, setProfile] = useState<ProfileData>({
+    id: "",
+    name: "",
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/users/getUser", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const { _id: id, name } = data.user;
+          setProfile({ id, name });
+          console.log(data);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:8080/estates/getEstateInfo/${id}`)
@@ -100,7 +134,43 @@ const EstateInfoPage = () => {
   }, [estate]);
 
   const handleMeeting = () => {
-    console.log("Cita agendada");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalSubmit = async (data: { date: string; message: string }) => {
+    const seller = estate && estate.seller ? estate.seller : null;
+    const meetingData = {
+      user: profile.id,
+      date: data.date,
+      message: data.message,
+      estate_id: id,
+      seller: seller,
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/meetings/createMeeting`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(meetingData),
+      }
+    );
+
+    const responseData = await response.json();
+    if (responseData.success) {
+      setError("");
+      alert("Cita agendada exitosamente");
+      closeModal();
+    } else {
+      setError(responseData.message);
+    }
   };
 
   return (
@@ -165,6 +235,14 @@ const EstateInfoPage = () => {
         )}
       </div>
       <Footer />
+
+      {isModalOpen && (
+        <Modal
+          onClose={closeModal}
+          onSubmit={handleModalSubmit}
+          error={error}
+        />
+      )}
     </div>
   );
 };

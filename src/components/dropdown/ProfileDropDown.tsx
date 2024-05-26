@@ -89,6 +89,14 @@ const ProfileDropDown = () => {
           </li>
           <li>
             <Link
+              href="/MyMeetingsPage"
+              className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+            >
+              Mis Citas
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/MyHousesPage"
               className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
             >
