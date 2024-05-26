@@ -99,6 +99,10 @@ const EstateInfoPage = () => {
     }
   }, [estate]);
 
+  const handleMeeting = () => {
+    console.log("Cita agendada");
+  };
+
   return (
     <div>
       <NavBar />
@@ -130,7 +134,10 @@ const EstateInfoPage = () => {
                 <p className="text-lg mt-4">Ciudad: {estate.city}</p>
                 <p className="text-lg mt-4">Dirección: {estate.address}</p>
                 <div className="flex justify-center">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-8">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-8"
+                    onClick={handleMeeting}
+                  >
                     Agendar Cita{" "}
                   </button>
                 </div>
