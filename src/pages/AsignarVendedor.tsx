@@ -62,8 +62,6 @@ const AsignarVendedor = () => {
 
   const handleAssign = () => {
     const token = localStorage.getItem("token");
-    console.log("Selected seller:", selectedSeller);
-    console.log("Estate selected:", estateSelected);
     if (token) {
       fetch("http://localhost:8080/estates/assignSeller", {
         method: "PUT",

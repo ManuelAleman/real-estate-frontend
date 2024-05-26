@@ -4,9 +4,10 @@ import Image from "next/image";
 interface Props {
   id: string;
   label: string;
+  handleUploadImage: (roomId: string, imageId: string, imageFile: File) => void;
 }
 
-const UploadImage = ({ id, label }: Props) => {
+const UploadImage = ({ id, label, handleUploadImage }: Props) => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
@@ -14,11 +15,8 @@ const UploadImage = ({ id, label }: Props) => {
     if (event.target.files && event.target.files.length > 0) {
       const image = event.target.files[0];
       setSelectedImage(image);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(image);
+      setPreviewImage(URL.createObjectURL(image));
+      handleUploadImage(id, image.name, image);
     }
   };
 

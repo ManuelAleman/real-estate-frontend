@@ -4,12 +4,23 @@ import UploadImage from "./UploadImage";
 
 interface FormEstateProps {
   checkFormFields: () => void;
+  handleUploadImage: (roomId: string, imageId: string, imageFile: File) => void;
 }
-const FormEstate = ({ checkFormFields }: FormEstateProps) => {
-  const [type, setType] = useState("Venta");
+const FormEstate = ({
+  checkFormFields,
+  handleUploadImage,
+}: FormEstateProps) => {
+  const [type, setType] = useState("venta");
+  const [wantSeller, setWantSeller] = useState(false);
 
   const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setType(event.target.value);
+  };
+
+  const handleWantSellerChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setWantSeller(event.target.value === "false" ? false : true);
   };
 
   return (
@@ -34,7 +45,11 @@ const FormEstate = ({ checkFormFields }: FormEstateProps) => {
           onChange={checkFormFields}
         />
 
-        <UploadImage id="imagenPresentacion" label="Imagen" />
+        <UploadImage
+          id="imagenPresentacion"
+          label="Imagen"
+          handleUploadImage={handleUploadImage}
+        />
 
         <label
           htmlFor="type"
@@ -83,10 +98,25 @@ const FormEstate = ({ checkFormFields }: FormEstateProps) => {
           required
           onChange={handleTypeChange}
         >
-          <option value="Venta">Venta</option>
-          <option value="Renta">Renta</option>
+          <option value="venta">Venta</option>
+          <option value="renta">Renta</option>
         </select>
-
+        <label
+          htmlFor="wantSeller"
+          className="block text-sm font-medium text-gray-700 mt-4"
+        >
+          ¿Quieres solicitar un vendedor?
+        </label>
+        <select
+          id="wantSeller"
+          name="wantSeller"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+          onChange={handleWantSellerChange}
+        >
+          <option value="false">No</option>
+          <option value="true">Si</option>
+        </select>
         <label
           htmlFor="price"
           className="block text-sm font-medium text-gray-700 mt-4"

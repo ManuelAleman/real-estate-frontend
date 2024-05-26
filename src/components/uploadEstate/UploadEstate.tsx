@@ -1,43 +1,71 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NewRoomCard from "../ui/NewRoomCard";
 import FormEstate from "../ui/FormEstate";
+import { useRouter } from "next/router";
+
+interface Estate {
+  presentationImg: File;
+  name: string;
+  description: string;
+  price: number;
+  type: string;
+  category: string;
+  user: string;
+  city: string;
+  address: string;
+  status: string;
+  wantSeller: string;
+  characteristics: string[];
+  images: File[];
+}
+interface Image {
+  id: string;
+  file: File;
+  roomId: string;
+}
 
 const UploadEstate = () => {
   const [roomType, setRoomType] = useState("");
-  const [roomCounts, setRoomCounts] = useState({
-    Recamara: 0,
-    Cocina: 0,
-    Baño: 0,
-    Sala: 0,
-    Comedor: 0,
-    Patio: 0,
-    Garaje: 0,
-  });
   const [rooms, setRooms] = useState<{ id: number; type: string }[]>([]);
   const [formFieldsFilled, setFormFieldsFilled] = useState(false);
-
+  const [roomImages, setRoomImages] = useState<Image[]>([]);
+  const [userId, setUserId] = useState("");
   const handleRoomTypeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setRoomType(event.target.value);
   };
 
-  const handleDeleteRoom = (id: number) => {
-    console.log("Deleting room with ID:", id);
+  const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/users/getUser", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            setUserId(data.user._id);
+          } else {
+            console.error("User data is null or undefined");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    }
+  }, [router]);
+
+  const handleDeleteRoom = (id: number) => {
     const updatedRooms = rooms.filter((room) => room.id !== id);
     setRooms(updatedRooms);
-
-    const deletedRoom = rooms.find((room) => room.id === id);
-    if (deletedRoom) {
-      const deletedRoomType = deletedRoom.type;
-      setRoomCounts((prevCounts) => ({
-        ...prevCounts,
-        [deletedRoomType]:
-          prevCounts[deletedRoomType as keyof typeof prevCounts] - 1,
-      }));
-    }
   };
 
   const handleAddRoom = () => {
@@ -47,17 +75,36 @@ const UploadEstate = () => {
       id: rooms.length + 1,
       type: roomType,
     };
-
     setRooms((prevRooms) => [...prevRooms, newRoom]);
-
-    setRoomCounts((prevCounts) => ({
-      ...prevCounts,
-      [roomType]: prevCounts[roomType as keyof typeof prevCounts] + 1,
-    }));
-
     setRoomType("");
   };
 
+  const handleUploadImage = (
+    roomId: string,
+    imageId: string,
+    imageFile: File
+  ) => {
+    setRoomImages((prevImages) => {
+      const existingImage = prevImages.find(
+        (image) => image.id === imageId && image.roomId === roomId
+      );
+
+      if (existingImage) {
+        const updatedImages = prevImages.map((image) => {
+          if (image.id === imageId && image.roomId === roomId) {
+            return { ...image, file: imageFile };
+          }
+          return image;
+        });
+        return updatedImages;
+      } else {
+        return [
+          ...prevImages,
+          { id: imageId, file: imageFile, roomId: roomId },
+        ];
+      }
+    });
+  };
   const checkFormFields = () => {
     const typeField = document.getElementById("type") as HTMLSelectElement;
     const nameField = document.getElementById("name") as HTMLInputElement;
@@ -88,6 +135,75 @@ const UploadEstate = () => {
       alert("Debes agregar al menos una habitación antes de enviar.");
       return;
     }
+
+    const imagesWithoutPresentationImg = roomImages.slice(1);
+
+    console.log(
+      "imagesWithoutPresentationImg",
+      imagesWithoutPresentationImg.map((image) => image.file)
+    );
+    console.log("roomImages", roomImages[0].file);
+
+    const estate: Estate = {
+      presentationImg: roomImages[0].file,
+      name: (document.getElementById("name") as HTMLInputElement).value,
+      description: (
+        document.getElementById("description") as HTMLTextAreaElement
+      ).value,
+      price: parseInt(
+        (document.getElementById("price") as HTMLInputElement).value
+      ),
+      type: (document.getElementById("type") as HTMLSelectElement).value,
+      category: (document.getElementById("category") as HTMLSelectElement)
+        .value,
+      user: userId,
+      city: (document.getElementById("city") as HTMLInputElement).value,
+      address: (document.getElementById("address") as HTMLInputElement).value,
+      wantSeller: (document.getElementById("wantSeller") as HTMLSelectElement)
+        .value,
+      characteristics: rooms.map((room) => room.type),
+      images: imagesWithoutPresentationImg.map((image) => image.file),
+      status: "waiting",
+    };
+
+    const formData = new FormData();
+    formData.append("presentationImg", estate.presentationImg);
+    formData.append("name", estate.name);
+    formData.append("description", estate.description);
+    formData.append("price", estate.price.toString());
+    formData.append("type", estate.type);
+    formData.append("category", estate.category);
+    formData.append("user", estate.user);
+    formData.append("city", estate.city);
+    formData.append("address", estate.address);
+    formData.append("wantSeller", estate.wantSeller);
+    formData.append("characteristics", JSON.stringify(estate.characteristics));
+    formData.append("status", estate.status);
+    estate.images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    fetch("http://localhost:8080/estates/createEstate", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Propiedad subida exitosamente");
+          router.push("/");
+        } else {
+          console.error("Error uploading estate:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    console.log("estate", estate);
   };
 
   return (
@@ -95,22 +211,13 @@ const UploadEstate = () => {
       <h1 className="md:my-12 md:mx-12 font-bold text-xl text-center">
         Sube la informacion de tu inmueble
       </h1>
-      <FormEstate checkFormFields={checkFormFields} />
+      <FormEstate
+        checkFormFields={checkFormFields}
+        handleUploadImage={handleUploadImage}
+      />
       <h1 className="md:my-12 md:mx-12 font-bold text-xl text-center">
         Habitaciones
       </h1>
-
-      <div>
-        <h2 className="text-center mb-4">Contador de espacios</h2>
-        <div className="flex flex-col md:flex-row md:justify-center">
-          {Object.entries(roomCounts).map(([roomType, count]) => (
-            <div key={roomType} className="flex flex-col items-center mx-4">
-              <span className="text-center">{roomType}</span>
-              <span className="text-center">{count}</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <div className="flex items-center justify-center mb-4 mt-8">
         <select
@@ -123,9 +230,6 @@ const UploadEstate = () => {
           <option value="Cocina">Cocina</option>
           <option value="Baño">Baño</option>
           <option value="Sala">Sala</option>
-          <option value="Comedor">Comedor</option>
-          <option value="Patio">Patio</option>
-          <option value="Garaje">Garaje</option>
         </select>
         <button
           onClick={handleAddRoom}
@@ -140,7 +244,9 @@ const UploadEstate = () => {
         <NewRoomCard
           key={room.id}
           roomType={room.type}
+          roomId={room.id.toString()}
           handleDeleteRoom={() => handleDeleteRoom(room.id)}
+          handleUploadImage={handleUploadImage}
         />
       ))}
 
