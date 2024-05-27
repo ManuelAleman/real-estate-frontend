@@ -12,7 +12,9 @@ import {
   decodeEstatesInRange,
 } from "../../utils/DecoderAddress";
 import Image from "next/image";
+import Link from "next/link";
 interface Estate {
+  _id: string;
   name: string;
   presentationImg: string;
   description: string;
@@ -176,6 +178,15 @@ const MapComponent = () => {
                   <p className="text-gray-700 text-base mb-2 text-center">
                     <strong>Precio:</strong> {selectedEstate.estate.price}
                   </p>
+                  <Link
+                    className="px-3 py-1 bg-gray-800 text-white text-xs font-bold uppercase rounded"
+                    href={{
+                      pathname: "/EstateInfoPage",
+                      query: { id: selectedEstate.estate._id },
+                    }}
+                  >
+                    Ver Propiedad
+                  </Link>
                 </div>
               </div>
             </InfoWindow>

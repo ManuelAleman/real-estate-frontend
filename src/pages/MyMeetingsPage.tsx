@@ -100,6 +100,7 @@ const MyMeetingsPage = () => {
       .then((response) => response.json())
       .then((data) => {
         setMeetings(data.meetings);
+        console.log(data.meetings);
         setLoading(false);
       })
       .catch((error) => {
@@ -108,33 +109,35 @@ const MyMeetingsPage = () => {
       });
   }, [profile]);
 
-  const handleClick = () => {
-    console.log(meetings);
-  };
-
   return (
     <div>
       <NavBar />
       <BannerHero />
       <div className="container mx-auto my-auto">
-        <h1 className="text-center mt-5">Mis reuniones</h1>
+        <h1 className="text-center mt-5 text-4xl">Mis reuniones</h1>
         <div className="row mt-5 mb-8">
-          {meetings.map((meeting) => (
-            <MeetingInfoCard
-              key={meeting._id}
-              id={meeting._id}
-              img={meeting.estate.presentationImg}
-              user={meeting.user.name}
-              seller={meeting.seller?.user.name}
-              sellerNumber={meeting.seller?.user.contactNumber}
-              sellerEmail={meeting.seller?.user.email}
-              estate={meeting.estate.name}
-              description={meeting.estate.description}
-              date={meeting.date}
-              status={meeting.status}
-              message={meeting.message}
-            />
-          ))}
+          {meetings && meetings.length > 0 ? (
+            meetings.map((meeting) => (
+              <MeetingInfoCard
+                key={meeting._id}
+                id={meeting._id}
+                img={meeting.estate.presentationImg}
+                user={meeting.user.name}
+                seller={meeting.seller?.user.name}
+                sellerNumber={meeting.seller?.user.contactNumber}
+                sellerEmail={meeting.seller?.user.email}
+                estate={meeting.estate.name}
+                description={meeting.estate.description}
+                date={meeting.date}
+                status={meeting.status}
+                message={meeting.message}
+              />
+            ))
+          ) : (
+            <div className="text-center my-40 text-3xl">
+              <p>No tienes reuniones programadas</p>
+            </div>
+          )}
         </div>
       </div>
       <Footer />
