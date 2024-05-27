@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "@/components/navbar/NavBar";
 import BannerHero from "@/components/ui/BannerHero";
 import Footer from "@/components/footer/Footer";
-import Image from "next/image";
-import MeetingInfoCard from "@/components/ui/MeetingInfoCard";
+import MeetingSellerAddCard from "@/components/ui/MeetingSellerAddCard";
 interface MeetingData {
   _id: string;
   user: User;
-  seller: Seller | null;
   estate: EstateData;
+  seller: Seller | null;
   date: Date;
   waitingSeller: boolean;
   status: string;
@@ -54,9 +53,8 @@ interface Seller {
   __v: number;
 }
 
-const MyMeetingsPage = () => {
+const AsignarVendedorACita = () => {
   const [meetings, setMeetings] = useState<MeetingData[]>([]);
-  const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<User>({
     _id: "",
     name: "",
@@ -89,53 +87,44 @@ const MyMeetingsPage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/meetings/getMyMeetingInfo/${profile._id}`, {
+    fetch("http://localhost:8080/meetings/getMeetingWithNoSeller", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
         setMeetings(data.meetings);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching meetings:", error);
-        setLoading(false);
       });
-  }, [profile]);
+  }, []);
 
   return (
     <div>
       <NavBar />
       <BannerHero />
-      <div className="container mx-auto my-auto">
-        <h1 className="text-center mt-5 text-4xl">Mis reuniones</h1>
-        <div className="row mt-5 mb-8">
-          {meetings && meetings.length > 0 ? (
-            meetings.map((meeting) => (
-              <MeetingInfoCard
-                key={meeting._id}
-                id={meeting._id}
-                img={meeting.estate.presentationImg}
-                user={meeting.user.name}
-                seller={meeting.seller?.user.name}
-                sellerNumber={meeting.seller?.user.contactNumber}
-                sellerEmail={meeting.seller?.user.email}
-                estate={meeting.estate.name}
-                description={meeting.estate.description}
-                date={meeting.date}
-                status={meeting.status}
-                message={meeting.message}
-              />
-            ))
-          ) : (
-            <div className="text-center my-40 text-3xl">
-              <p>No tienes reuniones programadas</p>
-            </div>
-          )}
+      <div className="container mx-auto px-4">
+        <h1 className="text-center text-3xl mt-4 font-bold">
+          Citas sin vendedor asignado
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+          {meetings.map((meeting) => (
+            <MeetingSellerAddCard
+              key={meeting._id}
+              id={meeting._id}
+              img={meeting.estate.presentationImg}
+              title={meeting.estate.name}
+              description={meeting.estate.description}
+              userName={meeting.user.name}
+              userPhone={meeting.user.contactNumber}
+              price={meeting.estate.price.toString()}
+              city={meeting.estate.city}
+              address={meeting.estate.address}
+              message={meeting.message}
+              userId={meeting.user._id}
+            />
+          ))}
         </div>
       </div>
       <Footer />
@@ -143,4 +132,4 @@ const MyMeetingsPage = () => {
   );
 };
 
-export default MyMeetingsPage;
+export default AsignarVendedorACita;

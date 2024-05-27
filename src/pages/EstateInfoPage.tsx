@@ -74,7 +74,6 @@ const EstateInfoPage = () => {
         .then((data) => {
           const { _id: id, name } = data.user;
           setProfile({ id, name });
-          console.log(data);
         });
     }
   }, []);

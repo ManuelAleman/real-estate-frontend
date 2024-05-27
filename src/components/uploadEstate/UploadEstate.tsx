@@ -100,24 +100,15 @@ const UploadEstate = () => {
     imageFile: File
   ) => {
     setRoomImages((prevImages) => {
-      const existingImage = prevImages.find(
-        (image) => image.id === imageId && image.roomId === roomId
+      const filteredImages = prevImages.filter(
+        (image) => image.roomId !== roomId
       );
+      const updatedImages = [
+        ...filteredImages,
+        { id: imageId, file: imageFile, roomId: roomId },
+      ];
 
-      if (existingImage) {
-        const updatedImages = prevImages.map((image) => {
-          if (image.id === imageId && image.roomId === roomId) {
-            return { ...image, file: imageFile };
-          }
-          return image;
-        });
-        return updatedImages;
-      } else {
-        return [
-          ...prevImages,
-          { id: imageId, file: imageFile, roomId: roomId },
-        ];
-      }
+      return updatedImages;
     });
   };
   const checkFormFields = () => {

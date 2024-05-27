@@ -22,7 +22,6 @@ interface Props {
 
 const DashBoardNewEstates = ({ estateData, type }: Props) => {
   const handleViewMoreStorage = () => {
-    console.log(type);
     if (type == "Mis_propiedades") {
       window.location.href = "/MyHousesPage";
     } else {

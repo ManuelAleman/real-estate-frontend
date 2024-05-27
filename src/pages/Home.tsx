@@ -50,7 +50,6 @@ const Home = () => {
           const { _id: id } = data.user;
           setProfile({ id });
           setIsLoggedIn(true);
-          console.log(data);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -77,7 +76,6 @@ const Home = () => {
         } else {
           setMyEstates([]);
         }
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching estates:", error);
