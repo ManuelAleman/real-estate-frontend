@@ -103,6 +103,16 @@ const ProfileDropDown = () => {
               Mis Casas
             </Link>
           </li>
+          {profile.role === "seller" && (
+            <li>
+              <Link
+                href="/MeetingUpdates"
+                className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+              >
+                Estados de citas
+              </Link>
+            </li>
+          )}
           {profile.role === "admin" && (
             <li>
               <Link

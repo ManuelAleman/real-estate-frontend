@@ -139,6 +139,7 @@ const EstateInfoPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setError("");
   };
 
   const handleModalSubmit = async (data: { date: string; message: string }) => {

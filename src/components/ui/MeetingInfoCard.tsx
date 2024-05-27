@@ -47,6 +47,9 @@ const MeetingInfoCard = ({
         return <span className="text-gray-500">Desconocido</span>;
     }
   };
+  const handleGenerarContrato = () => {
+    console.log("Generar contrato");
+  };
 
   return (
     <div>
@@ -61,7 +64,7 @@ const MeetingInfoCard = ({
               alt={estate}
               width={500}
               height={500}
-              className="w-full h-96 object-cover rounded-lg mx-8"
+              className="w-full h-72 object-cover object-center rounded-lg shadow-md"
             />
             <h1>
               <p className="text-lg text-center">{description}</p>
@@ -92,7 +95,7 @@ const MeetingInfoCard = ({
                 </h1>
               </div>
             ) : (
-              <div className="my-4">
+              <div className="my-">
                 <h1 className="text-xl font-bold text-center">Vendedor</h1>
                 <h1 className="text-lg text-center">Nombre: {seller}</h1>
                 <h1 className="text-lg text-center">Email: {sellerEmail}</h1>
@@ -103,6 +106,17 @@ const MeetingInfoCard = ({
             )}
           </div>
         </div>
+
+        {status === "done" && (
+          <div className=" flex justify-center mb-12">
+            <button
+              onClick={handleGenerarContrato}
+              className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              Generar Contrato
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
