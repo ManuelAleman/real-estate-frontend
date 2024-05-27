@@ -41,7 +41,7 @@ const EstateCard = (props: Props) => {
               </p>
             ))}
           </div>
-          <div className="flex justify-between items-center mt-4">
+          <div className="flex justify-evenly items-center mt-4">
             <h1 className="text-lg font-bold text-gray-800">${props.price}</h1>{" "}
             <Link
               className="px-3 py-1 bg-gray-800 text-white text-xs font-bold uppercase rounded"

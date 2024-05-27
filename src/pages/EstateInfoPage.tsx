@@ -27,6 +27,7 @@ interface Estate {
 }
 
 interface User {
+  id: string;
   name: string;
   contactNumber: string;
   email: string;
@@ -84,6 +85,7 @@ const EstateInfoPage = () => {
       .then((data) => {
         if (data.success) {
           setEstate(data.estate);
+          console.log(data.estate);
         } else {
           console.error("Error fetching estate:", data.message);
         }
@@ -150,6 +152,14 @@ const EstateInfoPage = () => {
       estate_id: id,
       seller: seller,
     };
+
+    console.log(profile.id);
+    console.log(estate?.user);
+
+    if (profile.id === estate?.user) {
+      setError("No puedes agendar una cita contigo mismo");
+      return;
+    }
 
     const response = await fetch(
       `http://localhost:8080/meetings/createMeeting`,

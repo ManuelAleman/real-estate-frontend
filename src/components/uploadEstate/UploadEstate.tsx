@@ -157,6 +157,11 @@ const UploadEstate = () => {
       imagesWithoutPresentationImg.map((image) => image.file)
     );
 
+    if (imagesWithoutPresentationImg.length < rooms.length * 2) {
+      alert("Debes agregar dos imagenes por area.");
+      return;
+    }
+
     console.log("roomImages", roomImages[0].file);
 
     const addres = document.getElementById("address") as HTMLInputElement;
