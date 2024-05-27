@@ -146,6 +146,10 @@ const MeetingUpdates = () => {
       });
   }, [sellerInfo._id]);
 
+  const filteredMeetings = meetings.filter(
+    (meeting) => meeting.status !== "done"
+  );
+
   return (
     <div>
       <NavBar />
@@ -153,8 +157,8 @@ const MeetingUpdates = () => {
       <div className="container mx-auto my-auto">
         <h1 className="text-center mt-5 text-4xl">Reuniones Asignadas</h1>
         <div className="row mt-5 mb-8">
-          {meetings && meetings.length > 0 ? (
-            meetings.map((meeting, index) => (
+          {filteredMeetings && filteredMeetings.length > 0 ? (
+            filteredMeetings.map((meeting, index) => (
               <EstadosDeCita
                 key={index}
                 id={meeting._id}

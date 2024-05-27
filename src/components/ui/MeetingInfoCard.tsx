@@ -108,13 +108,15 @@ const MeetingInfoCard = ({
         </div>
 
         {status === "done" && (
-          <div className=" flex justify-center mb-12">
-            <button
-              onClick={handleGenerarContrato}
+          <div className="flex justify-center mb-12">
+            <a
+              href="https://www.gob.mx/cms/uploads/attachment/file/117806/FORMATO_ARRENDAMIENTO_Actualizaci_n_Just_Persona_Fisica.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition duration-300"
             >
-              Generar Contrato
-            </button>
+              Imprimir contrato
+            </a>
           </div>
         )}
       </div>
