@@ -1,10 +1,13 @@
 import { Geist } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/components/query-provider";
-
+import NavBarHome from "@/components/layout/navbar";
+import Footer from "@/components/layout/footer";
 const geistSans = Geist({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
@@ -17,11 +20,13 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} antialiased`}>
-        <QueryProvider>
-          {children}
-        </QueryProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.className} antialiased`}>
+          <QueryProvider>
+            <NavBarHome />
+              {children}
+            <Footer />
+          </QueryProvider>
       </body>
     </html>
   );
